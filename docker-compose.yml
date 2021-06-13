@@ -1,0 +1,23 @@
+version: "3.9"
+services:
+  cups:
+#    image: tigerj/cups-airprint:latest
+    build:
+       context: ./cups-airprint
+#       image: cups-airprint-brother
+    container_name: cups-airprint-brother
+    network_mode: host
+    restart: unless-stopped
+    volumes:
+      - /var/run/dbus:/var/run/dbus
+      - ./cups-airprint/config:/config
+      - ./cups-airprint/services:/services
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    devices:
+      - /dev/bus:/dev/bus
+#      - /dev/usb:/dev/usb
+    environment:
+      - CUPSADMIN=admin
+      - CUPSPASSWORD=admin
+  
